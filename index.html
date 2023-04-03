@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>左右分栏页面</title>
+    <style>
+      /* 设置页面样式 */
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        box-sizing: border-box;
+      }
+      .mainBox {
+        display: flex;
+        height: 70vh;
+      }
+      .tit {
+        text-align: center;
+        background-color: #333;
+        padding: 5px 0;
+        color: #fff;
+      }
+      .inputBox {
+        width: 50%;
+        height: 100%;
+        border-right: solid 1px #ccc;
+        border-bottom: solid 1px #ccc;
+        box-sizing: border-box;
+      }
+      #input {
+        width: 100%;
+        height: 96%;
+        border: none;
+        outline: none;
+        padding: 0px;
+        font-size: 18px;
+        line-height: 1.5;
+        resize: none;
+        box-sizing: border-box;
+        overflow-y: scroll;
+      }
+      .outputBox {
+        width: 50%;
+        height: 100%;
+        border-bottom: solid 1px #ccc;
+        box-sizing: border-box;
+      }
+      #output {
+        border: none;
+        outline: none;
+        padding: 10px;
+        font-size: 18px;
+        line-height: 1.5;
+        overflow-y: scroll;
+      }
+      .toolBox {
+        text-align: center;
+      }
+      button {
+        background-color: rgba(0, 120, 0, 1);
+        color: #fff;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        margin-top: 10px;
+        border: none;
+      }
+      button:hover {
+        background-color: rgba(0, 120, 0, 0.8);
+      }
+    </style>
+    <link rel="stylesheet" href="default.min.css" />
+    <link rel="stylesheet" href="atom-one-dark.min.css" />
+    <script src="highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h2>json转ts类型声明工具playground</h2>
+      <div>
+        <div style="margin-bottom: 5px">
+          (作者：forrest酱) &nbsp;&nbsp;&nbsp;&nbsp; (掘金主页：<a
+            href="https://juejin.cn/user/3421335917699335/posts"
+            >https://juejin.cn/user/3421335917699335/posts</a
+          >)
+        </div>
+      </div>
+    </div>
+    <div class="mainBox">
+      <div class="inputBox">
+        <div class="tit">输入json数据</div>
+        <textarea id="input" placeholder="在此输入文本...">
+          {
+            "name": "John",
+            "age": 30,
+            "address": {
+              "city": "New York",
+              "state": "NY"
+            },
+            "hobbies": [
+              "reading",
+              "traveling"
+            ]
+          }
+          
+        </textarea>
+      </div>
+      <div class="outputBox">
+        <div class="tit">生成ts类型</div>
+        <div id="output">
+          <pre>
+            <code id="outputCode" class="typescript"></code>
+        </pre>
+        </div>
+      </div>
+    </div>
+    <div class="toolBox">
+      <button id="trans">开始转换</button>
+    </div>
+    <script src="./json-to-ts.js"></script>
+    <script>
+      const input = document.getElementById("input");
+      const outputCode = document.getElementById("outputCode");
+      let btnTrans = document.getElementById("trans");
+      btnTrans.addEventListener("click", () => {
+        try {
+          let data = JSON.parse(input.value);
+          outputCode.innerHTML = jsonToTs(data);
+          hljs.highlightAll();
+        } catch (error) {
+          outputCode.innerHTML = jsonToTs(error);
+        }
+      });
+    </script>
+  </body>
+</html>
