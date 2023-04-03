@@ -20,7 +20,11 @@ function jsonToTs(object, name = 'JsonType', namespace) {
         }
       })
       typeRes = typeRes.substring(0, typeRes.length - 1)
-      return `(${typeRes})[]`;
+      if (typeRes.split('|').length > 1) {
+        return `(${typeRes})[]`;
+      } else {
+        return `${typeRes}[]`;
+      }
     }
     if (typeof value === 'object' && value !== null) {
       const props = Object.entries(value)
